@@ -1,13 +1,15 @@
 {
   "files": {
-    "main.css": "/rss-react2023q1/static/css/main.e6c13ad2.css",
-    "main.js": "/rss-react2023q1/static/js/main.b73a55b1.js",
+    "main.css": "/rss-react2023q1/static/css/main.a0b063d7.css",
+    "main.js": "/rss-react2023q1/static/js/main.ded1c7bb.js",
+    "static/media/rssLogo.svg": "/rss-react2023q1/static/media/rssLogo.2418248d4ccd4e7738a4.svg",
+    "static/media/github.svg": "/rss-react2023q1/static/media/github.cadab172d77dc4de24c0.svg",
     "index.html": "/rss-react2023q1/index.html",
-    "main.e6c13ad2.css.map": "/rss-react2023q1/static/css/main.e6c13ad2.css.map",
-    "main.b73a55b1.js.map": "/rss-react2023q1/static/js/main.b73a55b1.js.map"
+    "main.a0b063d7.css.map": "/rss-react2023q1/static/css/main.a0b063d7.css.map",
+    "main.ded1c7bb.js.map": "/rss-react2023q1/static/js/main.ded1c7bb.js.map"
   },
   "entrypoints": [
-    "static/css/main.e6c13ad2.css",
-    "static/js/main.b73a55b1.js"
+    "static/css/main.a0b063d7.css",
+    "static/js/main.ded1c7bb.js"
   ]
 }
