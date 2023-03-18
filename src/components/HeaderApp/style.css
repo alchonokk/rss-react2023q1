@@ -1,0 +1,22 @@
+.header {
+  height: 10vh;
+  display: flex;
+  padding: 0 50px;
+  align-items: center;
+  justify-content: space-around;
+  text-transform: uppercase;
+  background-color: #bb9169;
+  color: white;
+}
+
+.navigation {
+  text-decoration: none;
+  text-transform: uppercase;
+  color:rgb(241, 225, 177);
+  font-size: 1rem;
+}
+
+
+.active {
+  color: white;
+}
