@@ -30,4 +30,11 @@ describe('Test App', () => {
     });
     expect(screen.getByText(/page 404/i)).toBeInTheDocument();
   });
+  test('check form link', () => {
+    const link = screen.getByTestId('formPage-link');
+    act(() => {
+      userEvent.click(link);
+    });
+    expect(screen.getByText(/Complete Form/i)).toBeInTheDocument();
+  });
 });

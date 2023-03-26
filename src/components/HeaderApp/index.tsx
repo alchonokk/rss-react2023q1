@@ -15,7 +15,7 @@ function HeaderApp() {
       <NavLink className="navigation" data-testid="page404" to="*">
         404
       </NavLink>
-      <NavLink className="navigation" to={ROUTES.FORM}>
+      <NavLink className="navigation" data-testid="formPage-link" to={ROUTES.FORM}>
         Form
       </NavLink>
     </header>
