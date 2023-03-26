@@ -141,7 +141,7 @@ class FormRender extends React.Component<FormProps, FormState> {
 
   render() {
     return (
-      <section data-testid="forms" className="section-form">
+      <section data-testid="form" className="section-form">
         <h1>Complete Form</h1>
         <form
           onSubmit={this.handleSubmit}
@@ -179,8 +179,8 @@ class FormRender extends React.Component<FormProps, FormState> {
           </label>
           <label htmlFor="city">
             <p className="label-name-item">Pick your city:</p>
-            <select ref={this.citySelect}>
-              <option value="" disabled selected hidden>
+            <select ref={this.citySelect} defaultValue={'default'}>
+              <option value="default" disabled>
                 Choose city...
               </option>
               <option value="brest">Brest</option>
