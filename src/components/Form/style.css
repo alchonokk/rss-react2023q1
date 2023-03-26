@@ -1,0 +1,62 @@
+.section-form,
+.block-forms {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 75vh;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  border: 2px solid #bb9169;
+  flex-wrap: wrap;
+  width: fit-content;
+  padding: 20px;
+}
+
+.button-submit {
+  padding-top: 20px;
+  align-self: center;
+}
+
+.wraper-switch {
+  display: flex;
+  justify-content: flex-start;
+  padding-top: 10px;
+}
+
+.label-name-item {
+  margin-bottom: 0;
+}
+
+.input-agree {
+  width: 25px;
+  height: 20px;
+}
+
+.error {
+  color: red;
+  font-style: italic;
+}
+
+.block-cards {
+  width: 90vw;
+  margin: 5rem auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-around;
+  gap: 2rem;
+}
+
+.message {
+  color: rgb(0, 255, 13);
+  font-style: italic;
+  font: 2em sans-serif;
+}
+
+.card-form {
+  border: 2px solid #bb9169;
+  border-radius: 10px 10px 0px 0px;
+}
