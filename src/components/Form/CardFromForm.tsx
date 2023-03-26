@@ -12,11 +12,11 @@ class CardForm extends React.Component<FormData> {
         <h5 className="card-detail">Name: {this.props.name}</h5>
         <h5 className="card-detail">SurName: {this.props.surName}</h5>
         {this.props.female ? (
-          <p data-testid="gender" className="card-detail">
+          <p data-testid="gender-female" className="card-detail">
             Gender: female
           </p>
         ) : (
-          <p className="card-detail" data-testid="gender">
+          <p className="card-detail" data-testid="gender-male">
             Gender: male
           </p>
         )}
