@@ -1,0 +1,59 @@
+body {
+  background-color: #f7f4ec;
+  margin: 0;
+}
+
+footer {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 10vh;
+  margin: 0, auto;
+  padding: 0, 20px;
+  width: 100%;
+  background-color: #bb9169;
+  color: white;
+}
+
+.git-user {
+  display: flex;
+  flex-direction: column;
+  font-size: 1rem;
+  transition: 0.5s;
+  column-gap: 0.5rem;
+}
+
+.git-link {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  text-decoration: none;
+  color: white;
+  padding: 0.2rem;
+}
+
+.rs-logo {
+  display: block;
+  background-repeat: no-repeat;
+  background-image: url("../../assets/rssLogo.svg");
+  height: 2rem;
+  width: 5rem;
+  background-size: contain;
+  background-position: center;
+  transition: 0.3s;
+  font-size: 0;
+}
+
+.git-logo {
+  display: block;
+  background-repeat: no-repeat;
+  background-image: url("../../assets/github.svg");
+  height: 1.5rem;
+  width: 1.5rem;
+  background-size: contain;
+  transition: 0.3s;
+}
+
+.user-name {
+  padding-left: 0.2rem;
+}
