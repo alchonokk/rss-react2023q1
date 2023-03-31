@@ -1,50 +1,35 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
-type SearchState = {
-  searchField: string;
-};
-
-type SearchProps = object;
-
-class SearchBox extends React.Component<SearchProps, SearchState> {
-  constructor(props: SearchProps) {
-    super(props);
-    this.state = { searchField: localStorage.getItem('searchData') || '' };
-  }
-
-  componentDidMount() {
+function SearchBox() {
+  const [searchData, setSearchData] = useState(() => {
     const searchDataFromLocalStor = localStorage.getItem('searchData');
     if (searchDataFromLocalStor) {
-      this.setState({ searchField: searchDataFromLocalStor });
+      return searchDataFromLocalStor;
     }
-  }
+    return '';
+  });
 
-  componentWillUnmount() {
-    localStorage.setItem('searchData', this.state.searchField);
-  }
+  useEffect(() => {
+    return () => {
+      localStorage.setItem('searchData', searchData);
+    };
+  });
 
-  componentDidUpdate() {
-    localStorage.setItem('searchData', this.state.searchField);
-  }
-
-  handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    this.setState({ searchField: e.target.value });
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchData(e.target.value);
   };
 
-  render() {
-    return (
-      <input
-        data-testid="input"
-        type="search"
-        className="search"
-        placeholder="Search..."
-        autoFocus
-        onChange={this.handleChange}
-        value={this.state.searchField}
-        aria-label="cost-input"
-      />
-    );
-  }
+  return (
+    <input
+      data-testid="input"
+      type="search"
+      className="search"
+      placeholder="Search..."
+      autoFocus
+      onChange={handleChange}
+      value={searchData}
+    />
+  );
 }
 
 export { SearchBox };
