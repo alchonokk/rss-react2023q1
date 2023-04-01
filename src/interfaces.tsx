@@ -20,6 +20,15 @@ export type FormData = {
   file: string;
 };
 
+export type FormDataNew = {
+  name: string;
+  surName: string;
+  date: string;
+  city: string;
+  gender: string;
+  filePicture: string;
+};
+
 export type FormState = {
   name: string | undefined;
   surName: string | undefined;
