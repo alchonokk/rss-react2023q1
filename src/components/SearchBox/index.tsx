@@ -1,18 +1,10 @@
 import React, { useEffect, useState } from 'react';
 
 function SearchBox() {
-  const [searchData, setSearchData] = useState(() => {
-    const searchDataFromLocalStor = localStorage.getItem('searchData');
-    if (searchDataFromLocalStor) {
-      return searchDataFromLocalStor;
-    }
-    return '';
-  });
+  const [searchData, setSearchData] = useState(localStorage.getItem('searchData') || '');
 
   useEffect(() => {
-    return () => {
-      localStorage.setItem('searchData', searchData);
-    };
+    localStorage.setItem('searchData', searchData);
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
