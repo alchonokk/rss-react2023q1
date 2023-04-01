@@ -5,7 +5,7 @@ import { CardForm } from './CardFromForm';
 describe('CardsBox', () => {
   beforeEach(() => {
     render(
-      <CardForm name={'My'} surName={''} date={''} city={''} male={false} female={true} file={''} />
+      <CardForm name={'My'} surName={''} date={''} city={''} gender={'male'} filePicture={''} />
     );
   });
 
