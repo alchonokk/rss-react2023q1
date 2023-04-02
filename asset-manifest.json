@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/rss-react2023q1/static/css/main.7bb1175d.css",
+    "main.css": "/rss-react2023q1/static/css/main.9e7dde9f.css",
     "main.js": "/rss-react2023q1/static/js/main.be4508c6.js",
     "static/media/rssLogo.svg": "/rss-react2023q1/static/media/rssLogo.2418248d4ccd4e7738a4.svg",
     "static/media/github.svg": "/rss-react2023q1/static/media/github.cadab172d77dc4de24c0.svg",
     "index.html": "/rss-react2023q1/index.html",
-    "main.7bb1175d.css.map": "/rss-react2023q1/static/css/main.7bb1175d.css.map",
+    "main.9e7dde9f.css.map": "/rss-react2023q1/static/css/main.9e7dde9f.css.map",
     "main.be4508c6.js.map": "/rss-react2023q1/static/js/main.be4508c6.js.map"
   },
   "entrypoints": [
-    "static/css/main.7bb1175d.css",
+    "static/css/main.9e7dde9f.css",
     "static/js/main.be4508c6.js"
   ]
 }
