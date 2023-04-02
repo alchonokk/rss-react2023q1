@@ -36,6 +36,29 @@ describe('RenderForm', () => {
     });
   });
 
+  describe('Input-surname', () => {
+    beforeEach(async () => {
+      const inputElement = screen.getByTestId('input-surname');
+      await act(async () => {
+        userEvent.type(inputElement, 'su');
+      });
+      await act(async () => {
+        fireEvent.submit(screen.getByTestId('submit'));
+      });
+    });
+
+    test('Event', () => {
+      expect(screen.getByDisplayValue('su')).toBeInTheDocument();
+    });
+
+    test('ErrorLine', async () => {
+      expect(screen.getByTestId('input-surname-error')).toBeInTheDocument();
+      expect(screen.getByTestId('input-surname-error')).toHaveTextContent(
+        'SurName must be longer than 3 letters'
+      );
+    });
+  });
+
   describe('Input-date', () => {
     beforeEach(async () => {
       const inputElement = screen.getByTestId('input-date');
