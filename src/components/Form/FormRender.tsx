@@ -1,12 +1,11 @@
-import React, { Dispatch, SetStateAction } from 'react';
+import React, { Dispatch, SetStateAction, useState } from 'react';
 import './style.css';
 import { FormDataNew } from 'interfaces';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
-import { FieldErrors } from 'react-hook-form/dist/types';
 import { nameRegExp, validateDate } from 'helpers/validationForm';
 
-function isSubmitDisabled(isDirty: boolean, errors: FieldErrors<FieldValues>): boolean {
-  return !isDirty || !(Object.keys(errors).length == 0);
+function isSubmitDisabled(isDirty: boolean): boolean {
+  return !isDirty;
 }
 
 const FormRender = ({
@@ -14,12 +13,22 @@ const FormRender = ({
 }: {
   setFormValues: Dispatch<SetStateAction<FormDataNew[]>>;
 }) => {
+  const [isShowMessage, setIsShowMessage] = useState<boolean>(false);
   const {
     register,
     handleSubmit,
     formState: { errors, isDirty },
     reset,
-  } = useForm({ mode: 'onSubmit', reValidateMode: 'onChange', shouldFocusError: true });
+  } = useForm({
+    mode: 'onSubmit',
+    reValidateMode: 'onSubmit',
+    shouldFocusError: true,
+  });
+
+  const showMess = async () => {
+    setIsShowMessage(true);
+    setTimeout(() => setIsShowMessage(false), 3000);
+  };
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     const { name, surName, date, city, gender, file } = data;
@@ -30,6 +39,7 @@ const FormRender = ({
         { name, surName, date, city, gender, filePicture },
       ]);
     }
+    showMess();
     reset();
   };
 
@@ -110,9 +120,8 @@ const FormRender = ({
           type="checkbox"
           className="input-agree"
           {...register('isAgree', {
-            required: {
-              value: true,
-              message: 'You must be agree',
+            validate: (value) => {
+              return value === true;
             },
           })}
         />
@@ -124,10 +133,11 @@ const FormRender = ({
           type="submit"
           value="Send"
           className="button-submit"
-          disabled={isSubmitDisabled(isDirty, errors)}
+          disabled={isSubmitDisabled(isDirty)}
           data-testid="submit"
         />
       </form>
+      {isShowMessage && <p className="message">Form has been submited</p>}
     </section>
   );
 };
