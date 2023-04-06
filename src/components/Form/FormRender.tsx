@@ -1,226 +1,145 @@
-import React from 'react';
+import React, { Dispatch, SetStateAction, useState } from 'react';
 import './style.css';
-import { FormProps } from 'interfaces';
+import { FormDataNew } from 'interfaces';
+import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
+import { nameRegExp, validateDate } from 'helpers/validationForm';
 
-type FormState = {
-  errors: string[];
-  isDisabled: boolean;
-  isFirst: boolean;
-  isSubmited: boolean;
-  isShowMessage: boolean;
-};
-
-class FormRender extends React.Component<FormProps, FormState> {
-  nameInput: React.RefObject<HTMLInputElement>;
-  surNameInput: React.RefObject<HTMLInputElement>;
-  dateInput: React.RefObject<HTMLInputElement>;
-  citySelect: React.RefObject<HTMLSelectElement>;
-  switcherInput: React.RefObject<HTMLInputElement>;
-  maleInput: React.RefObject<HTMLInputElement>;
-  femaleInput: React.RefObject<HTMLInputElement>;
-  agreeInput: React.RefObject<HTMLInputElement>;
-  fileInput: React.RefObject<HTMLInputElement>;
-  form: React.RefObject<HTMLFormElement>;
-
-  constructor(props: FormProps) {
-    super(props);
-    this.state = {
-      errors: [],
-      isDisabled: true,
-      isFirst: true,
-      isSubmited: false,
-      isShowMessage: false,
-    };
-    this.nameInput = React.createRef();
-    this.surNameInput = React.createRef();
-    this.dateInput = React.createRef();
-    this.citySelect = React.createRef();
-    this.switcherInput = React.createRef();
-    this.maleInput = React.createRef();
-    this.femaleInput = React.createRef();
-    this.agreeInput = React.createRef();
-    this.fileInput = React.createRef();
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.form = React.createRef();
-    this.firstInput = this.firstInput.bind(this);
-    this.showMess = this.showMess.bind(this);
-  }
-
-  firstInput = async () => {
-    if (this.state.isFirst === true) {
-      this.setState({ isDisabled: false });
-      this.setState({ isFirst: false });
-    } else {
-      if (this.state.isSubmited) {
-        await this.validate();
-      }
-    }
-  };
-
-  showMess = async () => {
-    this.setState({ isShowMessage: true });
-    setTimeout(() => this.setState({ isShowMessage: false }), 3000);
-  };
-
-  validate = async () => {
-    await this.setState({ errors: [] });
-    if (this.state.isFirst === false) {
-      if (
-        this.nameInput.current?.value.trim() !== undefined &&
-        this.nameInput.current?.value.trim().length < 3
-      ) {
-        this.setState({ errors: [...this.state.errors, 'name'] });
-      }
-      if (
-        this.surNameInput.current?.value.trim() !== undefined &&
-        this.surNameInput.current?.value.trim().length < 3
-      ) {
-        this.setState({ errors: [...this.state.errors, 'surName'] });
-      }
-      if (this.dateInput.current?.value !== undefined) {
-        const currentYear = new Date().getFullYear();
-        const currentMonth = new Date().getMonth();
-        const selectDateArray = this.dateInput.current?.value.split('-');
-        const selectYear = Number(selectDateArray[0]);
-        const selectMonth = Number(selectDateArray[1]);
-        if (
-          selectYear - currentYear > 0 ||
-          this.dateInput.current.value === null ||
-          selectMonth - currentMonth !== 1
-        ) {
-          this.setState({ errors: [...this.state.errors, 'date'] });
-        }
-      }
-      if (!this.dateInput.current?.value.length) {
-        this.setState({ errors: [...this.state.errors, 'date'] });
-      }
-      if (!this.citySelect.current?.value.length) {
-        this.setState({ errors: [...this.state.errors, 'city'] });
-      }
-      if (!this.maleInput.current?.checked && !this.femaleInput.current?.checked) {
-        this.setState({ errors: [...this.state.errors, 'gender'] });
-      }
-      if (!this.agreeInput.current?.checked) {
-        this.setState({ errors: [...this.state.errors, 'agree'] });
-      }
-      if (!this.fileInput.current?.value.length) {
-        this.setState({ errors: [...this.state.errors, 'file'] });
-      }
-    }
-    this.state.errors.length !== 0
-      ? this.setState({ isDisabled: true })
-      : this.setState({ isDisabled: false });
-  };
-
-  handleSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    await this.validate();
-    this.setState({ isSubmited: true });
-    if (this.state.errors.length === 0) {
-      if (this.fileInput.current?.files) {
-        this.props.updateData(
-          this.nameInput.current?.value,
-          this.surNameInput.current?.value,
-          this.dateInput.current?.value,
-          this.citySelect.current?.value,
-          this.maleInput.current?.checked,
-          this.femaleInput.current?.checked,
-          URL.createObjectURL(this.fileInput.current.files[0])
-        );
-        this.showMess();
-        this.form.current?.reset();
-        this.setState({ isDisabled: true });
-        this.setState({ isFirst: true });
-        this.setState({ isSubmited: false });
-      }
-    } else {
-      this.setState({ isDisabled: true });
-      await this.validate();
-    }
-  };
-
-  render() {
-    return (
-      <section data-testid="form" className="section-form">
-        <h1>Complete Form</h1>
-        <form
-          onSubmit={this.handleSubmit}
-          onInput={this.firstInput}
-          className="form"
-          ref={this.form}
-          data-testid="submit"
-        >
-          <label htmlFor="firstName">
-            <p className="label-name-item">Name:</p>
-            <input type="text" ref={this.nameInput} data-testid="input-name" />
-            {this.state.errors.includes('name') && (
-              <p className="error" data-testid="input-name-error">
-                Name must be longer than 3 letters
-              </p>
-            )}
-          </label>
-          <label htmlFor="surName">
-            <p className="label-name-item">Surname:</p>
-            <input type="text" ref={this.surNameInput} data-testid="input-surname" />
-            {this.state.errors.includes('surName') && (
-              <p className="error" data-testid="input-surname-error">
-                SurName must be longer than 3 letters
-              </p>
-            )}
-          </label>
-          <label htmlFor="date">
-            <p className="label-name-item">Date of this month:</p>
-            <input type="date" data-testid="input-date" ref={this.dateInput} />
-            {this.state.errors.includes('date') && (
-              <p className="error" data-testid="input-date-error">
-                Check date (you should select date of current month)
-              </p>
-            )}
-          </label>
-          <label htmlFor="city">
-            <p className="label-name-item">Pick your city:</p>
-            <select ref={this.citySelect} defaultValue={'default'}>
-              <option value="default" disabled>
-                Choose city...
-              </option>
-              <option value="brest">Brest</option>
-              <option value="minsk">Minsk</option>
-              <option value="grodno">Grodno</option>
-            </select>
-            {this.state.errors.includes('city') && <p className="error">Choose your city</p>}
-          </label>
-          <div className="wraper-switch">
-            <label>
-              <input type="radio" ref={this.maleInput} name="radio" /> Male
-            </label>
-            <label>
-              <input type="radio" ref={this.femaleInput} name="radio" /> Female
-            </label>
-            {this.state.errors.includes('gender') && <p className="error">Choose your gender</p>}
-          </div>
-          <label>
-            I agree to data processing:
-            <input name="isAgree" type="checkbox" ref={this.agreeInput} className="input-agree" />
-            {this.state.errors.includes('agree') && <p className="error">You must be agree</p>}
-          </label>
-          <label htmlFor="photo">
-            Upload picture :
-            <input type="file" ref={this.fileInput} />
-            {this.state.errors.includes('file') && <p className="error">You must add file</p>}
-          </label>
-          <div className="button-submit">
-            <input
-              type="submit"
-              value="Send"
-              className="input-submit"
-              disabled={this.state.isDisabled}
-            />
-          </div>
-        </form>
-        {this.state.isShowMessage && <p className="message">Form has been submited</p>}
-      </section>
-    );
-  }
+function isSubmitDisabled(isDirty: boolean): boolean {
+  return !isDirty;
 }
+
+const FormRender = ({
+  setFormValues,
+}: {
+  setFormValues: Dispatch<SetStateAction<FormDataNew[]>>;
+}) => {
+  const [isShowMessage, setIsShowMessage] = useState<boolean>(false);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isDirty },
+    reset,
+  } = useForm({
+    mode: 'onSubmit',
+    reValidateMode: 'onSubmit',
+    shouldFocusError: true,
+  });
+
+  const showMess = async () => {
+    setIsShowMessage(true);
+    setTimeout(() => setIsShowMessage(false), 3000);
+  };
+
+  const onSubmit: SubmitHandler<FieldValues> = (data) => {
+    const { name, surName, date, city, gender, file } = data;
+    if (file) {
+      const filePicture = URL.createObjectURL(file[0]);
+      setFormValues((state: FormDataNew[]) => [
+        ...state,
+        { name, surName, date, city, gender, filePicture },
+      ]);
+    }
+    showMess();
+    reset();
+  };
+
+  return (
+    <section data-testid="form" className="section-form">
+      <h1>Complete Forms</h1>
+      <form onSubmit={handleSubmit(onSubmit)} className="form">
+        <p className="label-name-item">Name:</p>
+        <input data-testid="input-name" {...register('name', nameRegExp())} />
+        {errors.name && (
+          <p className="error" data-testid="input-name-error">
+            Name must be longer than 3 letters
+          </p>
+        )}
+        <p className="label-name-item">Surname:</p>
+        <input data-testid="input-surname" {...register('surName', nameRegExp())} />
+        {errors.surName && (
+          <p className="error" data-testid="input-surname-error">
+            SurName must be longer than 3 letters
+          </p>
+        )}
+        <p className="label-name-item">Current date:</p>
+        <input
+          type="date"
+          data-testid="input-date"
+          {...register('date', {
+            validate: (value: Partial<string>) => {
+              return validateDate(value);
+            },
+          })}
+        />
+        {errors.date && (
+          <p className="error" data-testid="input-date-error">
+            Check date (you should select date of current month)
+          </p>
+        )}
+        <p className="label-name-item">Pick your city:</p>
+        <select defaultValue="" {...register('city', { required: true })}>
+          <option value="" disabled>
+            Choose city...
+          </option>
+          <option value="brest">Brest</option>
+          <option value="minsk">Minsk</option>
+          <option value="grodno">Grodno</option>
+        </select>
+        {errors.city && <p className="error">Choose city</p>}
+        <div className="wraper-switch">
+          <label>
+            <input
+              type="radio"
+              value="male"
+              {...register('gender', {
+                required: {
+                  value: true,
+                  message: 'Choose your gender',
+                },
+              })}
+            />
+            Male
+          </label>
+          <label>
+            <input
+              type="radio"
+              value="female"
+              {...register('gender', {
+                required: {
+                  value: true,
+                  message: 'Choose your gender',
+                },
+              })}
+            />
+            Female
+          </label>
+        </div>
+        {errors.gender && <p className="error">Choose your gender</p>}
+        <p>I agree to data processing:</p>
+        <input
+          type="checkbox"
+          className="input-agree"
+          {...register('isAgree', {
+            validate: (value) => {
+              return value === true;
+            },
+          })}
+        />
+        {errors.isAgree && <p className="error">You must be agree</p>}
+        <p>Upload file :</p>
+        <input type="file" {...register('file', { required: true })} />
+        {errors.file && <p className="error">You must add file</p>}
+        <input
+          type="submit"
+          value="Send"
+          className="button-submit"
+          disabled={isSubmitDisabled(isDirty)}
+          data-testid="submit"
+        />
+      </form>
+      {isShowMessage && <p className="message">Form has been submited</p>}
+    </section>
+  );
+};
 
 export { FormRender };

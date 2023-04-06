@@ -16,14 +16,12 @@
 }
 
 .button-submit {
-  padding-top: 20px;
-  align-self: center;
+  margin-top: 20px;
 }
 
 .wraper-switch {
   display: flex;
   justify-content: flex-start;
-  padding-top: 10px;
 }
 
 .label-name-item {
@@ -38,11 +36,12 @@
 .error {
   color: red;
   font-style: italic;
+  font-size: 9px;
 }
 
 .block-cards {
   width: 90vw;
-  margin: 5rem auto;
+  margin: 1rem auto;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -59,4 +58,9 @@
 .card-form {
   border: 2px solid #bb9169;
   border-radius: 10px 10px 0px 0px;
+}
+
+.form p {
+  margin-block-start: 0;
+  margin-block-end: 0;
 }
