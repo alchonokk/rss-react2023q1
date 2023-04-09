@@ -24,7 +24,7 @@ function CardFromSearch(cardData: Partial<SearchCard>) {
             onError={imageOnErrorHandler}
           />
         ) : (
-          <span className="image-card holder" data-testid="cardImage"></span>
+          <span className="image-card holder" data-testid="withoutCardImage"></span>
         )}
         <h3 data-testid="title">{cardData.title}</h3>
         <p data-testid="date-card-search">Date: {cardData.publishedAt}</p>

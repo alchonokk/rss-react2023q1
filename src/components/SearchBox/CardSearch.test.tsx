@@ -77,7 +77,7 @@ describe('Cards from api', () => {
           publishedAt={''}
           title={'apple'}
           url={''}
-          urlToImage={''}
+          urlToImage={'https://hello.com/fake.png'}
         />
       );
     });
@@ -112,5 +112,31 @@ describe('Cards from api', () => {
       const cards = screen.getAllByTestId('date-card-search');
       cards.map((card) => expect(card.querySelector('p')).toBeDefined());
     });
+
+    test('IsError', () => {
+      const img = screen.getByAltText('img picture');
+      fireEvent.error(img);
+      expect(img).toHaveAttribute('src', 'https://imgholder.ru/323x300/9dbf16/fff&text=image');
+    });
+  });
+});
+
+describe('without urlImage', () => {
+  beforeEach(() => {
+    render(
+      <CardFromSearch
+        author={'My'}
+        content={''}
+        description={''}
+        publishedAt={''}
+        title={'apple'}
+        url={''}
+        urlToImage={''}
+      />
+    );
+  });
+
+  test('withoutCardImage', () => {
+    expect(screen.getByTestId('withoutCardImage')).toBeInTheDocument();
   });
 });
