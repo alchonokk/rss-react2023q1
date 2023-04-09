@@ -39,3 +39,20 @@ export type FormState = {
   file: string | undefined;
   fields: FormData[];
 };
+
+export type SearchCard = {
+  author: string;
+  content: string;
+  description: string;
+  publishedAt: string;
+  source: { id: string; name: string };
+  title: string;
+  url: string;
+  urlToImage: string;
+};
+
+export type IValueToModal = {
+  isShowing: boolean;
+  hide: () => void;
+  cardData: Partial<SearchCard>;
+};
