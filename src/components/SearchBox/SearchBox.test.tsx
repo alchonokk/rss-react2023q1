@@ -30,7 +30,7 @@ describe('inputBox', () => {
   });
 });
 
-const articles = [
+let articles = [
   {
     author: 'Remy Tumin',
     content: 'Kanarek ',
@@ -65,6 +65,22 @@ describe('Default cards from api', () => {
       expect(axios.get).toHaveBeenCalledWith(
         'https://newsapi.org/v2/top-headlines?sources=bbc-news&apiKey=f5110220c7f6448d84d3250bb882da25'
       );
+    });
+  });
+});
+
+articles = [];
+
+describe('empty articles', () => {
+  describe('check', () => {
+    beforeEach(async () => {
+      render(<SearchBox />);
+      await (axios.get as jest.Mock).mockImplementationOnce(() =>
+        Promise.resolve({ data: { articles } })
+      );
+    });
+    test('text-error', async () => {
+      expect(screen.getByTestId('text-error')).toBeInTheDocument();
     });
   });
 });
