@@ -1,11 +1,10 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { FormDataNew } from 'interfaces';
+import { FormDataNew, SearchCard } from 'interfaces';
 import { RootState } from 'store';
 
 export interface BrainState {
-  valueApi: { status: string; totalResults: number; articles: [] };
-  value: number;
+  valueApi: { status: string; totalResults: number; articles: SearchCard[] };
   status: string;
   valueSearch: string;
   infoFromForm: FormDataNew[];
@@ -18,7 +17,6 @@ export const requestApiAsync = createAsyncThunk('brain/axiosBrain', async (URL: 
 
 const initialState: BrainState = {
   valueApi: { status: '', totalResults: 0, articles: [] },
-  value: 0,
   status: 'idle',
   valueSearch: '',
   infoFromForm: [],
@@ -53,7 +51,6 @@ export const brainSlice = createSlice({
 
 export const { changeValueOfSearch, addCardFromForm } = brainSlice.actions;
 
-export const selectCount = (state: RootState) => state.brain.value;
 export const selectStatus = (state: RootState) => state.brain.status;
 export const valueAPI = (state: RootState) => state.brain.valueApi;
 export const valueSearch = (state: RootState) => state.brain.valueSearch;
