@@ -1,12 +1,22 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { FormPage } from 'pages/FormPage';
 import React from 'react';
 import { act } from 'react-dom/test-utils';
+import { BrainState } from 'store/reduxSlice';
+import { renderWithStore } from 'store/render-with-store';
 
 describe('RenderForm', () => {
+  const customInitialState: Partial<{ brain: BrainState }> = {
+    brain: {
+      valueApi: { status: '', totalResults: 0, articles: [] },
+      status: 'idle',
+      valueSearch: '',
+      infoFromForm: [],
+    },
+  };
   beforeEach(async () => {
-    render(<FormPage />);
+    renderWithStore(<FormPage />, customInitialState);
   });
   test('renders FormsPage', () => {
     const formElement = screen.getByTestId('form');

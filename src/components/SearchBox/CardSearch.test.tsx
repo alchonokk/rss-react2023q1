@@ -4,6 +4,8 @@ import userEvent from '@testing-library/user-event';
 import axios from 'axios';
 import { SearchBox } from '.';
 import React from 'react';
+import { renderWithStore } from 'store/render-with-store';
+import { BrainState } from 'store/reduxSlice';
 jest.mock('axios');
 
 const articles = [
@@ -17,22 +19,20 @@ const articles = [
     url: 'https://www.nytimes.com/ty.html',
     urlToImage: 'https://000static01.nyt.com/images/',
   },
-  {
-    author: 'Remy',
-    content: 'Ka ',
-    description: 'Michael',
-    publishedAt: '2023-04-03T22:04:40Z',
-    source: { id: 'gg', name: 'New York Times' },
-    title: 'Dress',
-    url: 'https://www.nytimes.com/111',
-    urlToImage: 'https://1111static01.nyt.com/images/',
-  },
 ];
 
 describe('Cards from api', () => {
   describe('Mock api', () => {
+    const customInitialState: Partial<{ brain: BrainState }> = {
+      brain: {
+        valueApi: { status: '', totalResults: 0, articles: [] },
+        status: 'idle',
+        valueSearch: '',
+        infoFromForm: [],
+      },
+    };
     beforeEach(async () => {
-      render(<SearchBox />);
+      renderWithStore(<SearchBox />, customInitialState);
       const inputElement = screen.getByTestId('input');
       await act(() => {
         userEvent.type(inputElement, 'Dress');
@@ -40,30 +40,27 @@ describe('Cards from api', () => {
       await act(() => {
         fireEvent.submit(screen.getByTestId('input-submit'));
       });
-      (axios.get as jest.Mock).mockImplementationOnce(() =>
-        Promise.resolve({ data: { articles } })
-      );
     });
-    test('Fetch resolve', async () => {
+    test('axios resolve', async () => {
       expect(axios.get).toHaveBeenCalledWith(
         'https://newsapi.org/v2/everything?q=Dress&sources=bbc-news&searchIn=title&from=2023-03-20&sortBy=popularity&apiKey=f5110220c7f6448d84d3250bb882da25'
       );
     });
+  });
 
-    describe('Fetch resolve and render card', () => {
-      beforeEach(async () => {
-        render(<CardFromSearch {...articles[0]} />);
-      });
+  describe('axios resolve and render card', () => {
+    beforeEach(async () => {
+      render(<CardFromSearch {...articles[0]} />);
+    });
 
-      test('Check length', async () => {
-        const cardsTitle = screen.getAllByTestId('title');
-        expect(cardsTitle).toHaveLength(1);
-      });
+    test('Check length', async () => {
+      const cardsTitle = screen.getAllByTestId('title');
+      expect(cardsTitle).toHaveLength(1);
+    });
 
-      test('Check context', async () => {
-        const cardElement = screen.getByText(/dressage/i);
-        expect(cardElement).toBeInTheDocument();
-      });
+    test('Check context', async () => {
+      const cardElement = screen.getByText(/dressage/i);
+      expect(cardElement).toBeInTheDocument();
     });
   });
 
@@ -121,7 +118,7 @@ describe('Cards from api', () => {
   });
 });
 
-describe('without urlImage', () => {
+describe('api without urlImage', () => {
   beforeEach(() => {
     render(
       <CardFromSearch
