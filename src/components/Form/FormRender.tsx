@@ -1,18 +1,15 @@
-import React, { Dispatch, SetStateAction, useState } from 'react';
+import React, { useState } from 'react';
 import './style.css';
-import { FormDataNew } from 'interfaces';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import { nameRegExp, validateDate } from 'helpers/validationForm';
+import { useAppDispatch } from 'store/hook';
+import { addCardFromForm } from 'store/reduxSlice';
 
 function isSubmitDisabled(isDirty: boolean): boolean {
   return !isDirty;
 }
 
-const FormRender = ({
-  setFormValues,
-}: {
-  setFormValues: Dispatch<SetStateAction<FormDataNew[]>>;
-}) => {
+const FormRender = () => {
   const [isShowMessage, setIsShowMessage] = useState<boolean>(false);
   const {
     register,
@@ -24,6 +21,7 @@ const FormRender = ({
     reValidateMode: 'onSubmit',
     shouldFocusError: true,
   });
+  const dispatch = useAppDispatch();
 
   const showMess = async () => {
     setIsShowMessage(true);
@@ -34,10 +32,7 @@ const FormRender = ({
     const { name, surName, date, city, gender, file } = data;
     if (file) {
       const filePicture = URL.createObjectURL(file[0]);
-      setFormValues((state: FormDataNew[]) => [
-        ...state,
-        { name, surName, date, city, gender, filePicture },
-      ]);
+      dispatch(addCardFromForm({ name, surName, date, city, gender, filePicture }));
     }
     showMess();
     reset();
