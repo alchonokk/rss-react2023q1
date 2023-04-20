@@ -15,6 +15,22 @@
   padding: 20px;
 }
 
+.card-form {
+  background: #ffffff;
+  padding: 1rem 2rem;
+  width: 150px;
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: center;
+  font-size: 0.65rem;
+  align-items: center;
+  align-self: center;
+  border: 2px solid #bb9169;
+  border-radius: 10px 10px 0px 0px;
+}
+
 .button-submit {
   margin-top: 20px;
 }
@@ -55,12 +71,13 @@
   font: 2em sans-serif;
 }
 
-.card-form {
-  border: 2px solid #bb9169;
-  border-radius: 10px 10px 0px 0px;
-}
 
 .form p {
   margin-block-start: 0;
   margin-block-end: 0;
+}
+
+.card-form img {
+  width: 95% ;
+  height: 50%;
 }

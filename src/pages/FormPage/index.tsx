@@ -1,17 +1,18 @@
-import React, { useState } from 'react';
-import { FormDataNew } from 'interfaces';
+import React from 'react';
 import { FormRender } from 'components/Form/FormRender';
 import { CardForm } from 'components/Form/CardFromForm';
+import { useAppSelector } from 'store/hook';
+import { informationFromForm } from 'store/reduxSlice';
 
 function FormPage() {
-  const [formValues, setFormValues] = useState<FormDataNew[]>([]);
+  const dataFromForm = useAppSelector(informationFromForm);
   return (
     <>
       <div data-testid="page-forms" className="block-forms">
-        <FormRender setFormValues={setFormValues} />
+        <FormRender />
       </div>
       <main className="block-cards">
-        {formValues.map((field) => {
+        {dataFromForm.map((field) => {
           return <CardForm key={field.name} {...field}></CardForm>;
         })}
       </main>

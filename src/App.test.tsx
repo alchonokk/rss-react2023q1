@@ -1,15 +1,27 @@
 import React from 'react';
-import { act, render, screen } from '@testing-library/react';
+import { act, screen } from '@testing-library/react';
 import App from './App';
 import { MemoryRouter } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
+import { renderWithStore } from 'store/render-with-store';
+import { BrainState } from 'store/reduxSlice';
 
 describe('Test App', () => {
+  const customInitialState: Partial<{ brain: BrainState }> = {
+    brain: {
+      valueApi: { status: '', totalResults: 0, articles: [] },
+      status: 'idle',
+      valueSearch: '',
+      infoFromForm: [],
+    },
+  };
+
   beforeEach(() => {
-    render(
+    renderWithStore(
       <MemoryRouter>
         <App />
-      </MemoryRouter>
+      </MemoryRouter>,
+      customInitialState
     );
   });
 
